@@ -20,7 +20,7 @@ function LogIn({ login }) {
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Chuck Norris Joke Center</h2>
       <form onChange={onChange}>
         <div>
           <div>
@@ -31,6 +31,23 @@ function LogIn({ login }) {
           </div>
         </div>
         <button onClick={performLogin}>Login</button>
+        <div>
+          <br/>
+          <br/>
+          <p>Student: Lasse Dam</p>
+          <p>
+            Changes in this version that aren't in the group version:<br/>
+            1. Chuck Norris jokes now have his name replaced with an animal in the backend<br/>
+                as opposed to the frontend.<br/>
+            2. Generated Chuck Norris jokes are now stored in the database every time a user logs in.<br/>
+            3. A list of all stored jokes is now displayed when a user logs in.
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            Psst... username: user, password: MyPassword
+          </p>
+        </div>
       </form>
     </div>
   );
