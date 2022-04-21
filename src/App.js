@@ -1,7 +1,7 @@
-import Body from "Body";
 import React, { useState, useEffect } from "react";
 import facade from "./apiFacade";
 import 'style.css'
+import { Body } from "Body";
 
 function LogIn({ login }) {
   const init = { username: "", password: "" };
@@ -35,20 +35,6 @@ function LogIn({ login }) {
     </div>
   );
 }
-function LoggedIn() {
-  const [dataFromServer, setDataFromServer] = useState("Loading...");
-
-  useEffect(() => {
-    facade.fetchData().then((data) => setDataFromServer(data.msg));
-  }, []);
-
-  return (
-    <div>
-      <h2>Data Received from server</h2>
-      <p>{dataFromServer}</p>
-    </div>
-  );
-}
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -67,9 +53,7 @@ function App() {
         <LogIn login={login} />
       ) : (
         <div>
-          <LoggedIn />
-          <Body />
-          <button onClick={logout}>Logout</button>
+          <Body logout={logout} />
         </div>
       )}
     </div>

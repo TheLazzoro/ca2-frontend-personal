@@ -1,16 +1,18 @@
+import { LoggedIn } from "LoggedIn";
 import React from "react";
 import { useState, useEffect } from "react";
+import { JOKE_CONVERTED_URL } from "settings";
 import { JOKES_ALL_URL } from "settings";
 import { JOKE_ANIMAL_URL } from "settings";
 
-export default function Body() {
+export const Body = ({ logout }) => {
   const [joke, setJoke] = useState([]);
   const [animal, setAnimal] = useState([]);
   const [jokeAnimal, setJokeAnimal] = useState([]);
   const [jokesAll, setJokesAll] = useState([]);
 
   const getData = async () => {
-    const res = await fetch(JOKE_ANIMAL_URL);
+    const res = await fetch(JOKE_CONVERTED_URL);
     const json = await res.json();
     return json;
   };
@@ -24,32 +26,35 @@ export default function Body() {
   useEffect(() => {
     (async () => {
       const data = await getData();
-      let finishedJoke = data.jokeObj.value.replace(
-        /Chuck Norris/gi,
-        data.animalObj.name
-      );
-      setJoke(data.jokeObj.value);
-      setAnimal(data.animalObj.name);
-      setJokeAnimal(finishedJoke);
-
+      let joke = data.value;
+      setJoke(joke);
       const dataAll = await getDataJokesAll();
-      let jokeHtml = "";
-      dataAll.map( joke => jokeHtml += <p>${joke.value}</p>)
-      setJokesAll(jokeHtml);
+      setJokesAll(dataAll);
     })();
   }, []);
 
   return (
     <div>
-      <div>
+      <div className="split left">
+        <LoggedIn logout={logout} />
         <p>{joke}</p>
-        <p>+</p>
-        <p>{animal}</p>
-        <p>=</p>
-        <p>{jokeAnimal}</p>
         <p></p>
-        <p>{jokesAll}</p>
+      </div>
+      <div className="split right">
+        <h2>Joke Collection</h2>
+        <table>
+          <tr>
+            <th>Jokes (Total: {jokesAll.length})</th>
+          </tr>
+          <tr>
+            {jokesAll.map((joke) => (
+              <tr>
+                <td>{joke.value}</td>
+              </tr>
+            ))}
+          </tr>
+        </table>
       </div>
     </div>
   );
-}
+};
